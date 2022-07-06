@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './client/shared/main.scss';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import ToDoComponent from './client/pages/ToDoComponent/ToDoComponent';
 
