@@ -1,7 +1,9 @@
 @import "../pages/ToDoComponent/components/ToDoBoard/ToDoBoard.scss";
 @import "../pages/ToDoComponent/components/PlannerItem/PlannerItem.scss";
 @import "../pages/ToDoComponent/components/SwimLane/SwimLane.scss";
+@import "../pages/ToDoComponent/components/AddItemModal/AddItemModal.scss";
 @import "~bootstrap/scss/bootstrap";
+@import "~react-datepicker/dist/react-datepicker.css";
 
 .max-width {
     width: 100%;
@@ -26,6 +28,14 @@
 .pad-right-sm {
     padding-right: 0.75rem !important;
 };
+
+.pad-top-sm {
+    padding-top: 0.75rem !important;
+}
+
+.pad-top-md {
+    padding-top: 1.25rem !important;
+}
 
 .margin-left-sm {
     margin-left: 0.75rem !important;

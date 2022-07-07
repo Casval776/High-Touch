@@ -1,10 +1,15 @@
-import React, { FunctionComponent, ReactElement, useState } from 'react';
+import { FunctionComponent, ReactElement, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+
+// Types
 import { ToDoItemTypes } from '../../../../shared/constants';
 import { ToDoItem } from '../../../../shared/types';
+
+// Components
 import SwimLane from '../SwimLane/SwimLane';
+import AddItemModal from '../AddItemModal/AddItemModal';
 
 export type ToDoBoardProps = {
     todoList?: Array<ToDoItem>;
@@ -13,12 +18,15 @@ export type ToDoBoardProps = {
 };
 
 const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): ReactElement => {
+    // Props
     const { todoList, inProgressList, doneList } = props;
 
+    // State
     // There are currently only 3 swimlanes
     const [todoLane, setTodoLane] = useState<Array<ToDoItem>>(todoList || []);
     const [inProgressLane, setInProgressLane] = useState<Array<ToDoItem>>(inProgressList || []);
     const [doneLane, setDoneLane] = useState<Array<ToDoItem>>(doneList || []);
+    const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
 
     // Adds the provided item to the designated state array
     const addItemToLane = (changedItem: ToDoItem, targetLane: ToDoItemTypes): void => {
@@ -78,7 +86,7 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
                 console.log('how did you even do this stop it');
                 break;
         }
-    }
+    };
 
     const dragDropHandler = (changedItem: ToDoItem, targetLane: ToDoItemTypes): void => {
         // Remove
@@ -86,7 +94,9 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
 
         // Add
         addItemToLane(changedItem, targetLane);
-    }
+    };
+
+    const openModalHandler = (): void => setIsAddOpen(true);
 
     return (
         <>
@@ -95,6 +105,7 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
                     <Col span='4' className='margin-left-sm margin-right-sm'>
                         <DndProvider backend={HTML5Backend}>
                         <SwimLane
+                            openModal={openModalHandler}
                             removeHandler={removeItemFromLane}
                             dropHandler={dragDropHandler}
                             laneContents={todoLane}
@@ -104,6 +115,7 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
                     <Col span='4' className='margin-left-sm margin-right-sm'>
                         <DndProvider backend={HTML5Backend}>
                         <SwimLane
+                            openModal={openModalHandler}
                             removeHandler={removeItemFromLane}
                             dropHandler={dragDropHandler}
                             laneContents={inProgressLane}
@@ -113,6 +125,7 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
                     <Col span='4' className='margin-left-sm margin-right-sm'>
                         <DndProvider backend={HTML5Backend}>
                         <SwimLane
+                            openModal={openModalHandler}
                             removeHandler={removeItemFromLane}
                             dropHandler={dragDropHandler}
                             laneContents={doneLane}
@@ -121,6 +134,14 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
                     </Col>
                 </Row>
             </Container>
+            {isAddOpen &&
+            <AddItemModal 
+                isOpen={isAddOpen}
+                addItemHandler={(item: ToDoItem) => {
+                    addItemToLane(item, item.status);
+                    setIsAddOpen(false);
+                }}
+                closeMe={() => setIsAddOpen(false)}/>}
         </>
     );
 };

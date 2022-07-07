@@ -1,13 +1,18 @@
-import React, { FunctionComponent, ReactElement, useState } from 'react';
-import { Button, CardGroup, Col, Container, Row } from 'react-bootstrap';
-import { ToDoItemTypeLabels, ToDoItemTypes } from '../../../../shared/constants';
-import { ToDoItem } from '../../../../shared/types';
-import PlannerItem from '../PlannerItem/PlannerItem';
+import { FunctionComponent, ReactElement, useState } from 'react';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus, faSquareXmark } from '@fortawesome/free-solid-svg-icons';
 import { useDrop } from 'react-dnd';
 
+// Types
+import { ToDoItemTypeLabels, ToDoItemTypes } from '../../../../shared/constants';
+import { ToDoItem } from '../../../../shared/types';
+
+// Components
+import PlannerItem from '../PlannerItem/PlannerItem';
+
 export type SwimLaneProps = {
+    openModal: () => void;
     dropHandler: (changedItem: ToDoItem, targetLane: ToDoItemTypes) => void;
     removeHandler: (item: ToDoItem, sourceLane: ToDoItemTypes) => void;
     laneContents?: Array<ToDoItem>;
@@ -15,7 +20,7 @@ export type SwimLaneProps = {
 };
 
 const SwimLane: FunctionComponent<SwimLaneProps> = (props: SwimLaneProps): ReactElement => {
-    const { dropHandler, removeHandler, laneContents, laneType } = props;
+    const { openModal, dropHandler, removeHandler, laneContents, laneType } = props;
     const [isDeleteMode, setIsDeleteMode] = useState<boolean>(false);
     const [{ isDrop }, dropRef] = useDrop({
         accept: 'plannerItem',
@@ -38,16 +43,16 @@ const SwimLane: FunctionComponent<SwimLaneProps> = (props: SwimLaneProps): React
     return (
         <>
             <Container ref={dropRef} className={`swimlane-container${isDrop ? 'dropBlink' : ''}`}>
-                <Row className='g-1'>
+                <Row>
                     <Col>
                         <h1>{ToDoItemTypeLabels[laneType]}</h1>
                         <span className='max-width'>
-                            <Button><FontAwesomeIcon icon={faSquarePlus} /></Button>
+                            <Button onClick={() => openModal()}><FontAwesomeIcon icon={faSquarePlus} /></Button>
                             &nbsp;
                             <Button onClick={() => setIsDeleteMode(!isDeleteMode)}><FontAwesomeIcon icon={faSquareXmark} /></Button>
                         </span>
                     </Col>
-                    <CardGroup>
+                    <Row className='g-1' xs={1} md={1} lg={1}>
                         {laneContents?.map((item:  ToDoItem) =>
                             <PlannerItem
                                 key={item.id}
@@ -56,7 +61,7 @@ const SwimLane: FunctionComponent<SwimLaneProps> = (props: SwimLaneProps): React
                                 contents={item}
                                 itemType={laneType} />
                         )}
-                    </CardGroup>
+                    </Row>
                 </Row>
             </Container>
         </>

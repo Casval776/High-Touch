@@ -1,53 +1,40 @@
-import React, { FunctionComponent, ReactElement } from 'react';
-import { ToDoItemTypes } from '../../shared/constants';
-import { getRandomId } from '../../shared/helpers';
+import { FunctionComponent, ReactElement, useEffect, useState } from 'react';
+
+// Types
 import { ToDoItem } from '../../shared/types';
+
+// Components
 import ToDoBoard from './components/ToDoBoard/ToDoBoard';
 
 export type ToDoComponentProps = {
 
 };
 
+// The purpose of this component would be to retrieve/persist data over network calls
 const ToDoComponent: FunctionComponent<ToDoComponentProps> = (props: ToDoComponentProps): ReactElement => {
-    const defineDefaultDataToDo = (): Array<ToDoItem> => {
-        return [{
-            id: getRandomId(),
-            completed: false,
-            description: 'description',
-            dueDate: (new Date()).toString(),
-            title: 'titleffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-            status: ToDoItemTypes.ToDo,
-        }];
+    const [todoLane, setTodoLane] = useState<Array<ToDoItem>>([]);
+    const [inProgressLane, setInProgressLane] = useState<Array<ToDoItem>>([]);
+    const [doneLane, setDoneLane] = useState<Array<ToDoItem>>([]);
+
+    const loadData = (): void => {
+        // I'd make API calls here
     };
 
-    const defineDefaultDataInProgress = (): Array<ToDoItem> => {
-        return [{
-            id: getRandomId(),
-            completed: false,
-            description: 'description',
-            dueDate: (new Date()).toString(),
-            title: 'title',
-            status: ToDoItemTypes.InProgress,
-        }];
+    const saveDate = (): void => {
+        // I'd persist data here
     };
 
-    const defineDefaultDataDone = (): Array<ToDoItem> => {
-        return [{
-            id: getRandomId(),
-            completed: false,
-            description: 'description',
-            dueDate: (new Date()).toString(),
-            title: 'title',
-            status: ToDoItemTypes.Done,
-        }];
-    };
+    useEffect(() => {
+        // Fetch!
+        loadData();
+    }, []);
 
     return (
         <>
             <ToDoBoard
-                todoList={defineDefaultDataToDo()}
-                inProgressList={defineDefaultDataInProgress()}
-                doneList={defineDefaultDataDone()} />
+                todoList={todoLane}
+                inProgressList={inProgressLane}
+                doneList={doneLane} />
         </>
     );
 };
