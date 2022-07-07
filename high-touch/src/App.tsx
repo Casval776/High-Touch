@@ -6,6 +6,7 @@ import ToDoComponent from './client/pages/ToDoComponent/ToDoComponent';
 const App: React.FC = () => {
   return (
     <>
+      <h1>Steve's Planner</h1>
       <Router >
         <Routes>
           <Route caseSensitive={false} path='/todo' element={<ToDoComponent />} />

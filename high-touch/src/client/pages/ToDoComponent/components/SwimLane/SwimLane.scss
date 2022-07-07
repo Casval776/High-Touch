@@ -1,0 +1,28 @@
+@-webkit-keyframes dropBlink {
+    from, to {
+        border-color: black;
+    }
+
+    50% {
+        border-color: rgb(13, 110, 253);
+    }
+}
+
+@keyframes dropBlink {
+    from, to {
+        border-color: black;
+    }
+
+    50% {
+        border-color: rgb(13, 110, 253);
+    }
+}
+
+.dropBlink {
+    border-style: dashed;
+}
+
+.dropBlink:hover {
+    -webkit-animation: dropBlink 1s step-end infinite;
+    animation: dropBlink 1s step-end infinite;
+}

@@ -1,4 +1,6 @@
 @import "../pages/ToDoComponent/components/ToDoBoard/ToDoBoard.scss";
+@import "../pages/ToDoComponent/components/PlannerItem/PlannerItem.scss";
+@import "../pages/ToDoComponent/components/SwimLane/SwimLane.scss";
 @import "~bootstrap/scss/bootstrap";
 
 .max-width {
@@ -36,3 +38,7 @@
 .margin-bottom-sm {
     margin-bottom: 0.75rem !important;
 };
+
+.float-right {
+    float: right;
+}
