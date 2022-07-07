@@ -12,7 +12,7 @@ import { ToDoItem } from '../../../../shared/types';
 import PlannerItem from '../PlannerItem/PlannerItem';
 
 export type SwimLaneProps = {
-    openModal: () => void;
+    openModal: (lane: ToDoItemTypes) => void;
     dropHandler: (changedItem: ToDoItem, targetLane: ToDoItemTypes) => void;
     removeHandler: (item: ToDoItem, sourceLane: ToDoItemTypes) => void;
     laneContents?: Array<ToDoItem>;
@@ -47,7 +47,7 @@ const SwimLane: FunctionComponent<SwimLaneProps> = (props: SwimLaneProps): React
                     <Col>
                         <h1>{ToDoItemTypeLabels[laneType]}</h1>
                         <span className='max-width'>
-                            <Button onClick={() => openModal()}><FontAwesomeIcon icon={faSquarePlus} /></Button>
+                            <Button onClick={() => openModal(laneType)}><FontAwesomeIcon icon={faSquarePlus} /></Button>
                             &nbsp;
                             <Button onClick={() => setIsDeleteMode(!isDeleteMode)}><FontAwesomeIcon icon={faSquareXmark} /></Button>
                         </span>

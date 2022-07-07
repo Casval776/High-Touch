@@ -26,7 +26,12 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
     const [todoLane, setTodoLane] = useState<Array<ToDoItem>>(todoList || []);
     const [inProgressLane, setInProgressLane] = useState<Array<ToDoItem>>(inProgressList || []);
     const [doneLane, setDoneLane] = useState<Array<ToDoItem>>(doneList || []);
+
+    // Toggles the add modal
     const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
+
+    // Designates target lane for add modal
+    const [addItemLane, setAddItemLane] = useState<ToDoItemTypes>(ToDoItemTypes.ToDo);
 
     // Adds the provided item to the designated state array
     const addItemToLane = (changedItem: ToDoItem, targetLane: ToDoItemTypes): void => {
@@ -96,7 +101,10 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
         addItemToLane(changedItem, targetLane);
     };
 
-    const openModalHandler = (): void => setIsAddOpen(true);
+    const openModalHandler = (lane: ToDoItemTypes): void => {
+        setIsAddOpen(true);
+        setAddItemLane(lane);
+    };
 
     return (
         <>
@@ -137,6 +145,7 @@ const ToDoBoard: FunctionComponent<ToDoBoardProps> = (props: ToDoBoardProps): Re
             {isAddOpen &&
             <AddItemModal 
                 isOpen={isAddOpen}
+                laneType={addItemLane}
                 addItemHandler={(item: ToDoItem) => {
                     addItemToLane(item, item.status);
                     setIsAddOpen(false);

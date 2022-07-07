@@ -10,7 +10,7 @@ import './client/shared/main.scss';
 const App: React.FC = () => {
   return (
     <>
-      <h1>Steve's Planner</h1>
+      <h1>My Planner</h1>
       <Router >
         <Routes>
           <Route caseSensitive={false} path='/' element={<ToDoComponent />} />

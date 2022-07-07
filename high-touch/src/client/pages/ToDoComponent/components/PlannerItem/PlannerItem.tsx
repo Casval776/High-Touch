@@ -33,7 +33,7 @@ const PlannerItem: FunctionComponent<ToDoProps> = (props: ToDoProps): ReactEleme
                 border={ToDoItemTypeMapping[itemType]} 
                 className={`margin-bottom-sm rounded-corners${isDragging ? 'is-being-dragged': ''}`}>
                 <Card.Header>
-                    {contents.title} - {contents.id}
+                    <h3>{contents.title}</h3>
                     {isDeleteMode && 
                     <a href='' className='float-right' onClick={() => removeHandler(contents)}>
                         <span className='full-width'><FontAwesomeIcon icon={faSquareXmark} /></span>
@@ -42,7 +42,7 @@ const PlannerItem: FunctionComponent<ToDoProps> = (props: ToDoProps): ReactEleme
                 <Card.Body>
                     <Card.Text>{contents.description}</Card.Text>
                 </Card.Body>
-                <Card.Footer className='text-muted'>{moment(new Date(contents.dueDate)).format('MM/DD/yyyy')}</Card.Footer>
+                <Card.Footer className='text-muted'>Due Date: {moment(new Date(contents.dueDate)).format('MM/DD/yyyy')}</Card.Footer>
             </Card>
         </>
     );
